@@ -1,12 +1,15 @@
-using System.Diagnostics;
 using Manzano_Portfolio_Quiz.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Manzano_Portfolio_Quiz.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ProjectRepository _repo = new();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,7 +18,8 @@ namespace Manzano_Portfolio_Quiz.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var projects = _repo.GetAll();
+            return View(projects);   
         }
 
         public IActionResult Privacy()
