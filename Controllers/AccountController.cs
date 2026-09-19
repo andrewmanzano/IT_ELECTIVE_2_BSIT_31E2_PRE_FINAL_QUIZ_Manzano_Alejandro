@@ -10,7 +10,10 @@ namespace Manzano_Portfolio_Quiz.Controllers
     public class AccountController : Controller
     {
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult Login()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password, string? returnUrl = null)
