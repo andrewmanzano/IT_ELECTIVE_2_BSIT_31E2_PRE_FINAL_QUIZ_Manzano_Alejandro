@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Manzano_Portfolio_Quiz.styles.css" asp-append-version="true" />
+
+    @* Render section for page-specific CSS files *@
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>

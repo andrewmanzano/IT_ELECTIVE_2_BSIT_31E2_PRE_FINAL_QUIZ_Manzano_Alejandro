@@ -1,72 +1,225 @@
 ﻿@model Manzano_Portfolio_Quiz.Models.Project
 
-<div class="container mt-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<style>
+    /* Bright Crisp Teal & Mint Gradient Background */
+    body {
+        background: radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 15%, rgba(6, 182, 212, 0.18) 0%, transparent 45%), radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%), linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 50%, #f0f9ff 100%) !important;
+        background-attachment: fixed !important;
+        color: #0f172a !important;
+        min-height: 100vh;
+    }
+
+    /* Glassmorphic Light Teal Breadcrumb Bar */
+    .custom-breadcrumb {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(13, 148, 136, 0.2);
+        border-radius: 12px;
+        padding: 0.75rem 1.25rem;
+        box-shadow: 0 4px 15px rgba(13, 148, 136, 0.05);
+    }
+
+        .custom-breadcrumb a {
+            color: #0d9488 !important;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            .custom-breadcrumb a:hover {
+                color: #0f766e !important;
+                text-decoration: underline;
+            }
+
+        .custom-breadcrumb .breadcrumb-item.active {
+            color: #64748b !important;
+        }
+
+    /* Main Showcase Light Card with Emerald Accents */
+    .project-detail-card {
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(20, 184, 166, 0.25) !important;
+        border-top: 3px solid #10b981 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 15px 35px rgba(13, 148, 136, 0.1) !important;
+    }
+
+    .project-title-gradient {
+        background: linear-gradient(135deg, #0f766e 0%, #0284c7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    }
+
+    .project-img-preview {
+        border-radius: 14px;
+        border: 1px solid rgba(20, 184, 166, 0.3);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        object-fit: cover;
+    }
+
+    /* Bright Teal & Cyan Tech Badges */
+    .badge-tech-custom {
+        background: rgba(20, 184, 166, 0.12) !important;
+        color: #0f766e !important;
+        border: 1px solid rgba(13, 148, 136, 0.25) !important;
+        backdrop-filter: blur(4px);
+        font-weight: 700;
+        padding: 0.45em 0.8em;
+        border-radius: 8px;
+    }
+
+    /* Vivid Mint & Teal Gradient Buttons */
+    .btn-github-custom {
+        background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 0.65rem 1.5rem;
+        border: none;
+        box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+        transition: all 0.25s ease-in-out;
+        text-decoration: none !important;
+    }
+
+        .btn-github-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(13, 148, 136, 0.45);
+            background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%) !important;
+            color: #ffffff !important;
+        }
+
+    .btn-comment-submit {
+        background: linear-gradient(135deg, #10b981 0%, #0d9488 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 0.65rem 1.5rem;
+        border: none;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        transition: all 0.25s ease-in-out;
+    }
+
+        .btn-comment-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(16, 185, 129, 0.45);
+            background: linear-gradient(135deg, #059669 0%, #0f766e 100%) !important;
+        }
+
+    /* Comment Form & Items */
+    .comments-section-card {
+        background: rgba(255, 255, 255, 0.88) !important;
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(20, 184, 166, 0.2) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .comment-item-card {
+        background: #ffffff !important;
+        border: 1px solid rgba(20, 184, 166, 0.2) !important;
+        border-left: 4px solid #10b981 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .custom-input {
+        background: #ffffff !important;
+        border: 1px solid rgba(20, 184, 166, 0.3) !important;
+        border-radius: 10px !important;
+        color: #0f172a !important;
+    }
+
+        .custom-input::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        .custom-input:focus {
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.2) !important;
+            color: #0f172a !important;
+        }
+</style>
+
+<div class="container mt-4 pb-5">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="custom-breadcrumb mb-4">
+        <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Table of Contents</a></li>
-            <li class="breadcrumb-item active">@Model.Title</li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
         </ol>
     </nav>
 
-    <div class="row align-items-center mb-4">
-        <div class="col-md-5 mb-3 mb-md-0">
-            <img src="@Url.Content(Model.ThumbnailPath)" class="img-fluid rounded shadow border w-100" alt="@Model.Title detail preview" />
-        </div>
-        <div class="col-md-7 ps-md-4">
-            <h1 class="fw-bold text-break mb-2">@Model.Title</h1>
+    <!-- Main Project Showcase -->
+    <div class="project-detail-card p-4 p-md-5 mb-5">
+        <div class="row align-items-center">
+            <div class="col-md-5 mb-3 mb-md-0">
+                <img src="@Url.Content(Model.ThumbnailPath)" class="img-fluid project-img-preview w-100" alt="@Model.Title detail preview" />
+            </div>
+            <div class="col-md-7 ps-md-4">
+                <h1 class="display-6 project-title-gradient text-break mb-3">@Model.Title</h1>
 
-            @if (Model.Technologies != null && Model.Technologies.Any())
-            {
-                <div class="mb-3">
-                    @foreach (var tech in Model.Technologies)
-                    {
-                        <span class="badge bg-primary me-1 fs-6">@tech</span>
-                    }
-                </div>
-            }
+                @if (Model.Technologies != null && Model.Technologies.Any())
+                {
+                    <div class="mb-3">
+                        @foreach (var tech in Model.Technologies)
+                        {
+                            <span class="badge badge-tech-custom me-2 mb-2 fs-6">@tech</span>
+                        }
+                    </div>
+                }
 
-            <p class="lead mb-4">@Model.DetailedDescription</p>
+                <p class="lead mb-4 text-dark">@Model.DetailedDescription</p>
 
-            <a href="@Model.GitHubUrl" target="_blank" class="btn btn-dark btn-lg">
-                <i class="bi bi-github"></i> View GitHub Repository
-            </a>
+                @if (!string.IsNullOrEmpty(Model.GitHubUrl))
+                {
+                    <a href="@Model.GitHubUrl" target="_blank" class="btn btn-github-custom btn-lg d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-github"></i> View GitHub Repository
+                    </a>
+                }
+            </div>
         </div>
     </div>
 
-    <hr class="my-5" />
-
+    <!-- Comments Section -->
     <div class="row">
         <div class="col-md-8">
-            <h3 class="fw-bold mb-3">Project Comments (@Model.Comments.Count)</h3>
+            <h3 class="fw-bold mb-4 text-dark">Project Comments (@(Model.Comments?.Count ?? 0))</h3>
 
-            <form asp-action="AddComment" method="post" class="card card-body shadow-sm mb-4">
+            <!-- Comment Form -->
+            <form asp-action="AddComment" method="post" class="comments-section-card p-4 mb-4">
                 <input type="hidden" name="projectId" value="@Model.Id" />
                 <div class="mb-3">
-                    <label class="form-label font-weight-bold">Your Name</label>
-                    <input type="text" name="author" class="form-control" required placeholder="Enter your name..." />
+                    <label class="form-label fw-bold text-dark">Your Name</label>
+                    <input type="text" name="author" class="form-control custom-input" required placeholder="Enter your name..." />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label font-weight-bold">Comment</label>
-                    <textarea name="text" class="form-control" rows="3" required placeholder="Write a comment..."></textarea>
+                    <label class="form-label fw-bold text-dark">Comment</label>
+                    <textarea name="text" class="form-control custom-input" rows="3" required placeholder="Write a comment..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary align-self-start">Post Comment</button>
+                <button type="submit" class="btn btn-comment-submit align-self-start">Post Comment</button>
             </form>
 
-            <div class="list-group">
-                @if (!Model.Comments.Any())
+            <!-- Comments List -->
+            <div class="mt-4">
+                @if (Model.Comments == null || !Model.Comments.Any())
                 {
-                    <p class="text-muted">No comments yet. Be the first to leave one!</p>
+                    <p class="text-secondary fst-italic">No comments yet. Be the first to leave one!</p>
                 }
                 else
                 {
                     @foreach (var c in Model.Comments.OrderByDescending(x => x.CreatedAt))
                     {
-                        <div class="list-group-item list-group-item-action flex-column align-items-start mb-2 rounded border">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 fw-bold">@c.Author</h6>
+                        <div class="comment-item-card p-3 mb-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 fw-bold" style="color: #0d9488;">@c.Author</h6>
                                 <small class="text-muted">@c.CreatedAt.ToString("MMM dd, yyyy HH:mm")</small>
                             </div>
-                            <p class="mb-1">@c.Text</p>
+                            <p class="mb-0 text-dark">@c.Text</p>
                         </div>
                     }
                 }
